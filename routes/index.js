@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Twitter = require('twitter');
+var moment = require('moment');
 
 var client = new Twitter({
   consumer_key: process.env.TWITTER_CONSUMER_KEY,
@@ -56,7 +57,7 @@ router.get('/twitter/search/:q/:ln/:geo', function(req, res, next) {
       texto = texto.replace(/(\r?\n|\r)/gm, " ");
       final["statuses"].push({
         text: texto,
-        created_at: tweets["statuses"][i].created_at
+        created_at: moment(tweets["statuses"][i].created_at).format("lll");
       });
     }
     
