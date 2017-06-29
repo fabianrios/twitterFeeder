@@ -30,10 +30,21 @@ router.get('/twitter/trends', function(req, res, next) {
   });
 });
 
-router.get('/twitter/search/:q/:ln', function(req, res, next) {
+router.get('/twitter/search/:q/:ln/:geo', function(req, res, next) {
   var query = req.params.q;
   var ln = req.params.ln;
-  client.get('search/tweets', {q: query, result_type: "recent", geocode: "51.4958898,6.5428315,10km", lang: ln}, function(error, tweets, response) {
+  var geo = req.params.geo;
+  var search = {
+    q: query,
+    result_type: "recent"
+  }
+  
+  if(geo)
+    search.geocode(geo);
+  if(ln)
+    search.lang(ln);
+  
+  client.get('search/tweets', search, function(error, tweets, response) {
     if(error) throw error;
     console.log(tweets);  // The favorites. 
     res.status(200).send(JSON.stringify(tweets));
