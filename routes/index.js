@@ -53,7 +53,7 @@ router.get('/twitter/search/:q/:ln/:geo', function(req, res, next) {
     
     for(var i = 0; i < tweets["statuses"].length; i++){
       var texto = tweets["statuses"][i].text;
-      texto = texto.replace("\r\n", "");
+      texto = texto.replace(/(\r?\n|\r)/gm, " ");
       final["statuses"].push({
         text: tweets["statuses"][i].text,
         created_at: tweets["statuses"][i].created_at
