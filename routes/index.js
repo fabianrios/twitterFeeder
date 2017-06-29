@@ -56,17 +56,20 @@ router.get('/twitter/search/:q/:ln/:geo', function(req, res, next) {
       var texto = tweets["statuses"][i].text;
       texto = texto.replace(/(\r?\n|\r)/gm, " ");
       var media = tweets["statuses"][i].extended_entities ? tweets["statuses"][i].extended_entities.media : "";
-      var video = media != "" ? media[0].video_info.variants : {};
-      
-      // for (var k = 0; k < video.length; k++){
-      //
-      // }
+      var video = media != "" ? media[0].video_info.variants : [];
+      var video_url; 
+      for (var k = 0; k < video.length; k++){
+        if(video[k].content_type == "video/mp4" && video[k].bitrate >= 832000){
+          video_url = video[k].url;
+        }
+      }
       
       final["statuses"].push({
         text: texto,
         created_at: tweets["statuses"][i].created_at,
         media: media,
-        video: video
+        video: video,
+        video_url: video_url
       });
     }
     
