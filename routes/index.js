@@ -55,7 +55,7 @@ router.get('/twitter/search/:q/:ln/:geo', function(req, res, next) {
     for(var i = 0; i < tweets["statuses"].length; i++){
       var texto = tweets["statuses"][i].text;
       texto = texto.replace(/(\r?\n|\r)/gm, " ");
-      var media = tweets["statuses"][i].extended_entities ? tweets["statuses"][i].extended_entities.media.video_info : "";
+      var media = tweets["statuses"][i].extended_entities ? tweets["statuses"][i].extended_entities.media : "";
       final["statuses"].push({
         text: texto,
         created_at: tweets["statuses"][i].created_at,
