@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Twitter = require('twitter');
+var moment = require('moment');
 
 var client = new Twitter({
   consumer_key: process.env.TWITTER_CONSUMER_KEY,
@@ -55,6 +56,7 @@ router.get('/twitter/search/:q/:ln/:geo', function(req, res, next) {
     for(var i = 0; i < tweets["statuses"].length; i++){
       var texto = tweets["statuses"][i].text;
       texto = texto.replace(/(\r?\n|\r)/gm, " ");
+      var fecha = moment(tweets["statuses"][i].created_at);
       var media = tweets["statuses"][i].extended_entities ? tweets["statuses"][i].extended_entities.media : "";
       var video = media != "" ? media[0].video_info.variants : [];
       var video_url; 
@@ -66,7 +68,7 @@ router.get('/twitter/search/:q/:ln/:geo', function(req, res, next) {
       
       final["statuses"].push({
         text: texto,
-        created_at: tweets["statuses"][i].created_at,
+        created_at: fecha,
         media: media,
         video: video,
         video_url: video_url
