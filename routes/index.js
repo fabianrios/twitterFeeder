@@ -30,9 +30,10 @@ router.get('/twitter/trends', function(req, res, next) {
   });
 });
 
-router.get('/twitter/search/:q', function(req, res, next) {
+router.get('/twitter/search/:q/:ln', function(req, res, next) {
   var query = req.params.q;
-  client.get('search/tweets', {q: query}, function(error, tweets, response) {
+  var ln = req.params.ln;
+  client.get('search/tweets', {q: query, result_type: "recent", geocode: "51.4958898,6.5428315,10km", lang: ln}, function(error, tweets, response) {
     if(error) throw error;
     console.log(tweets);  // The favorites. 
     res.status(200).send(JSON.stringify(tweets));
