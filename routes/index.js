@@ -46,7 +46,21 @@ router.get('/twitter/search/:q/:ln/:geo', function(req, res, next) {
   client.get('search/tweets', search, function(error, tweets, response) {
     if(error) throw error;
     console.log(tweets);  // The favorites. 
-    res.status(200).send(JSON.stringify(tweets));
+    
+    var final = {
+      tweets: []
+    };
+    
+    for(var i = 0; i < tweets["statuses"].length; i++){
+      var texto = tweets["statuses"][i].text;
+      texto = texto.replace("\r\n", "");
+      final["tweets"].push({
+        text: tweets["statuses"][i].text,
+        date: tweets["statuses"][i].created_at
+      });
+    }
+    
+    res.status(200).send(JSON.stringify(final));
   });
 });
 
