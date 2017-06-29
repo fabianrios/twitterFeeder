@@ -36,7 +36,6 @@ router.get('/twitter/search/:q/:ln/:geo', function(req, res, next) {
   var geo = req.params.geo;
   var search = {
     q: query,
-    result_type: "recent"
   }
   
   if(geo)
