@@ -48,7 +48,8 @@ router.get('/twitter/search/:q/:ln/:geo', function(req, res, next) {
     console.log(tweets);  // The favorites. 
     
     var final = {
-      statuses: []
+      statuses: [],
+      tweets
     };
     
     for(var i = 0; i < tweets["statuses"].length; i++){
