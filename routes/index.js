@@ -40,9 +40,9 @@ router.get('/twitter/search/:q/:ln/:geo', function(req, res, next) {
   }
   
   if(geo)
-    search.geocode(geo);
+    search.geocode = geo;
   if(ln)
-    search.lang(ln);
+    search.lang = ln;
   
   client.get('search/tweets', search, function(error, tweets, response) {
     if(error) throw error;
