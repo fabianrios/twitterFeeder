@@ -48,15 +48,15 @@ router.get('/twitter/search/:q/:ln/:geo', function(req, res, next) {
     console.log(tweets);  // The favorites. 
     
     var final = {
-      tweets: []
+      statuses: []
     };
     
     for(var i = 0; i < tweets["statuses"].length; i++){
       var texto = tweets["statuses"][i].text;
       texto = texto.replace("\r\n", "");
-      final["tweets"].push({
+      final["statuses"].push({
         text: tweets["statuses"][i].text,
-        date: tweets["statuses"][i].created_at
+        created_at: tweets["statuses"][i].created_at
       });
     }
     
