@@ -56,7 +56,7 @@ router.get('/twitter/search/:q/:ln/:geo', function(req, res, next) {
     for(var i = 0; i < tweets["statuses"].length; i++){
       var texto = tweets["statuses"][i].text;
       texto = texto.replace(/(\r?\n|\r)/gm, " ");
-      var fecha = moment(tweets["statuses"][i].created_at).format("MM-DD HH:mm");
+      var fecha = moment(tweets["statuses"][i].created_at).format("MM-DD h:mm:ss a");
       var media = tweets["statuses"][i].extended_entities ? tweets["statuses"][i].extended_entities.media : "";
       var video = media != "" ? media[0].video_info.variants : [];
       var video_url; 
