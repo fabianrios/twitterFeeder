@@ -17,22 +17,11 @@ router.get('/', function(req, res, next) {
 
 function addNewlines(str) {
   var result = '';
-  var array;
-  if(str.length > 70){
-    array = str.split(" ");
-    for(var i = 0; i < array.length; i++){
-      if (i == array.length/2){
-        result += '\n';
-      }else {
-        result += array[i]+' ';
-      }
-    }
-    return result;
-  }else{
-    return str;
+  while (str.length > 0) {
+    result += str.substring(0, 50) + '\n';
+    str = str.substring(50);
   }
-  
-  
+  return result;
 }
 
 router.get('/twitter/favorites', function(req, res, next) {
