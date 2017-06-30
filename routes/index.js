@@ -15,6 +15,15 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+function addNewlines(str) {
+  var result = '';
+  while (str.length > 0) {
+    result += str.substring(0, 50) + '\n';
+    str = str.substring(50);
+  }
+  return result;
+}
+
 router.get('/twitter/favorites', function(req, res, next) {
   client.get('favorites/list', function(error, tweets, response) {
     if(error) throw error;
@@ -30,6 +39,7 @@ router.get('/twitter/trends', function(req, res, next) {
     res.status(200).send(JSON.stringify(tweets));
   });
 });
+
 
 router.get('/twitter/search/:q/:ln/:geo', function(req, res, next) {
   var query = req.params.q;
@@ -55,7 +65,7 @@ router.get('/twitter/search/:q/:ln/:geo', function(req, res, next) {
     
     for(var i = 0; i < tweets["statuses"].length; i++){
       var texto = tweets["statuses"][i].text;
-      texto = texto.replace(/(\r?\n|\r)/gm, " ");
+      texto = addNewlines(texto.replace(/(\r?\n|\r)/gm, " "));
       var fecha = moment(tweets["statuses"][i].created_at).format('DD MMMM, h:mm a');
       var media = tweets["statuses"][i].extended_entities ? tweets["statuses"][i].extended_entities.media : "";
       var video = media != "" && media[0].video_info ? media[0].video_info.variants : [];
