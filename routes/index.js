@@ -20,15 +20,19 @@ function addNewlines(str) {
   var array;
   if(str.length > 70){
     array = str.split(" ");
-  }
-  for(var i = 0; i < array.length; i++){
-    if (i == array.length/2){
-      result += '\n';
-    }else {
-      result += array[i]+' ';
+    for(var i = 0; i < array.length; i++){
+      if (i == array.length/2){
+        result += '\n';
+      }else {
+        result += array[i]+' ';
+      }
     }
+    return result;
+  }else{
+    return str;
   }
-  return result;
+  
+  
 }
 
 router.get('/twitter/favorites', function(req, res, next) {
