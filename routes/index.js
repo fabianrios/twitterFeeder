@@ -17,6 +17,9 @@ router.get('/', function(req, res, next) {
 
 function addNewlines(str) {
   var result = '';
+  if(str.length > 70){
+    str..split(" ");
+  }
   while (str.length > 0) {
     result += str.substring(0, 50) + '\n';
     str = str.substring(50);
