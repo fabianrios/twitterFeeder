@@ -91,7 +91,8 @@ router.get('/twitter/search/:q/:ln/:geo', function(req, res, next) {
     
     for(var i = 0; i < tweets["statuses"].length; i++){
       var texto = tweets["statuses"][i].text;
-      texto = splitIntoLines(texto.replace(/(\r?\n|\r)/gm, " "),50);
+      texto = texto.replace(/(\r?\n|\r)/gm;
+      var finaltexto = splitIntoLines(texto, " "),50);
       var fecha = moment(tweets["statuses"][i].created_at).format('DD MMMM, h:mm a');
       var media = tweets["statuses"][i].extended_entities ? tweets["statuses"][i].extended_entities.media : "";
       var video = media != "" && media[0].video_info ? media[0].video_info.variants : [];
@@ -103,7 +104,7 @@ router.get('/twitter/search/:q/:ln/:geo', function(req, res, next) {
       }
       
       final["statuses"].push({
-        text: texto,
+        text: finaltexto,
         created_at: fecha,
         media: media,
         video: video,
