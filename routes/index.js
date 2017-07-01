@@ -15,13 +15,39 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-function addNewlines(str) {
-  var result = '';
-  while (str.length > 0) {
-    result += str.substring(0, 50) + '\n';
-    str = str.substring(50);
-  }
-  return result;
+function splitIntoLines(input, len) {
+    var i;
+    var output = [];
+    var lineSoFar = "";
+    var temp;
+    var words = input.split(' ');
+    for (i = 0; i < words.length;) {
+        // check if adding this word would exceed the len
+        temp = addWordOntoLine(lineSoFar, words[i]);
+        if (temp.length > len) {
+            if (lineSoFar.length == 0) {
+                lineSoFar = temp;     // force to put at least one word in each line
+                i++;                  // skip past this word now
+            }
+            output.push(lineSoFar);   // put line into output
+            lineSoFar = "";           // init back to empty
+        } else {
+            lineSoFar = temp;         // take the new word
+            i++;                      // skip past this word now
+        }
+    }
+    if (lineSoFar.length > 0) {
+        output.push(lineSoFar);
+    }
+    
+    return(output.join(' \n'));
+}
+
+function addWordOntoLine(line, word) {
+    if (line.length != 0) {
+        line += " ";
+    }
+    return(line += word);
 }
 
 router.get('/twitter/favorites', function(req, res, next) {
@@ -65,7 +91,7 @@ router.get('/twitter/search/:q/:ln/:geo', function(req, res, next) {
     
     for(var i = 0; i < tweets["statuses"].length; i++){
       var texto = tweets["statuses"][i].text;
-      texto = addNewlines(texto.replace(/(\r?\n|\r)/gm, " "));
+      texto = splitIntoLines(texto.replace(/(\r?\n|\r)/gm, " "),50);
       var fecha = moment(tweets["statuses"][i].created_at).format('DD MMMM, h:mm a');
       var media = tweets["statuses"][i].extended_entities ? tweets["statuses"][i].extended_entities.media : "";
       var video = media != "" && media[0].video_info ? media[0].video_info.variants : [];
