@@ -81,8 +81,11 @@ router.get('/twitter/search/:q/:ln/:geo', function(req, res, next) {
     search.lang = ln;
   
   client.get('search/tweets', search, function(error, tweets, response) {
-    if(error) throw error;
-    console.log(tweets);  // The favorites. 
+    if(error) {
+      console.log(error);
+      throw error;
+    } 
+    console.log(response, tweets);  // The favorites. 
     
     var final = {
       statuses: [],
