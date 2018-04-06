@@ -67,7 +67,7 @@ router.get('/twitter/trends', function(req, res, next) {
 });
 
 
-router.get(['/twitter/search/:q/:ln/:geo', '/twitter/search/:q', '/twitter/search/:q'], function(req, res, next) {  
+router.get(['/twitter/search/:q/:geo/:ln', '/twitter/search/:q/:geo', '/twitter/search/:q'], function(req, res, next) {  
   var query = req.params.q;
   var ln = req.params.ln;
   var geo = req.params.geo;
@@ -85,7 +85,7 @@ router.get(['/twitter/search/:q/:ln/:geo', '/twitter/search/:q', '/twitter/searc
       console.log(error);
       throw error;
     } 
-    console.log(response, tweets);  // The favorites. 
+    console.log(tweets);  // The favorites. 
     
     var final = {
       statuses: [],
